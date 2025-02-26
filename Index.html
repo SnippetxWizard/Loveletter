@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5e6f0;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .letter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #ff4d88;
+        }
+
+        .letter {
+            font-size: 1.2em;
+            line-height: 1.5;
+            min-height: 100px;
+        }
+
+        .typewriter {
+            border-right: 3px solid #ff4d88;
+            animation: blink 0.7s infinite;
+        }
+
+        .signature {
+            font-size: 1.5em;
+            color: #ff4d88;
+            margin-top: 20px;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .letter { font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="letter-container">
+        <h1>Hi [Crush’s Name]!</h1>
+        <div class="letter" id="letterText"></div>
+        <div class="signature">Love, [Your Name]</div>
+    </div>
+
+    <script>
+        // Typewriter Effect with Simple Hearts
+        const letterText = `You make my days brighter just by being you. I made this little page to show you how much you mean to me—hope it brings a smile to your face!`;
+        const letterElement = document.getElementById('letterText');
+        let i = 0;
+
+        function typeWriter() {
+            if (i < letterText.length) {
+                letterElement.innerHTML = letterText.substring(0, i + 1);
+                i++;
+                if (Math.random() < 0.1) spawnHeartParticle(); // 10% chance per letter
+                setTimeout(typeWriter, 80);
+            } else {
+                letterElement.classList.remove('typewriter');
+            }
+        }
+
+        letterElement.classList.add('typewriter');
+        setTimeout(typeWriter, 500);
+
+        function spawnHeartParticle() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'absolute';
+            heart.style.fontSize = '20px';
+            heart.style.left = `${Math.random() * window.innerWidth}px`;
+            heart.style.top = `${window.innerHeight}px`;
+            document.body.appendChild(heart);
+
+            let y = window.innerHeight;
+            const animateHeart = () => {
+                y -= 2;
+                heart.style.top = `${y}px`;
+                if (y > -20) requestAnimationFrame(animateHeart);
+                else heart.remove();
+            };
+            animateHeart();
+        }
+    </script>
+</body>
+</html>
